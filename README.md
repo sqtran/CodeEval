@@ -1,2 +1,2 @@
 # CodeEval
-codeeval.com solutions
+Just some codeeval.com solutions I worked on.
