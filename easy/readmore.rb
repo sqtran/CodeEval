@@ -1,13 +1,19 @@
 =begin
 Steve Tran
-Read More Solution
-Feb 17, 2015
+Donkeys need to Read More Solution
+Feb 18, 2015
 =end
-
+require 'debugger'
 File.open(ARGV[0]).each_line do |line|
-  if line.length > 55
-    puts line[0..39].strip + "... <Read More>"
+  #debugger
+  if line.strip.length > 55
+    line = line[0..39]
+    idx = line.rindex(" ")
+    if idx
+      line = line[0..line.rindex(" ")].strip
+    end
+    puts line + "... <Read More>"
   else
-    puts line
+    puts line.strip
   end
 end
