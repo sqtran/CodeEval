@@ -3,13 +3,12 @@ Just some codeeval.com solutions I worked on
 
 Here is the scoring I found from googling.
 
-def get_submission_score(score, memory_taken, time_taken, category):
-    """
-    @param score: the score which is received by test-cases
-    @param memory_taken: memory taken by submission
-    @param time_taken: time taken by submission
-    @param category: Easy(1)/Moderate(2)/Hard(3)
-    """
+def get_submission_score(score, memory_taken, time_taken, category)
+
+    #@param score: the score which is received by test-cases
+    #@param memory_taken: memory taken by submission
+    #@param time_taken: time taken by submission
+    #@param category: Easy(1)/Moderate(2)/Hard(3)
 
     total_max = {
         1: 35,  # max 35 points for Easy challenge
