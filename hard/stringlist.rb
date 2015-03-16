@@ -1,6 +1,7 @@
 =begin
 Steve Tran
 String list solution
+Scored a 72/100 on Code Eval; it's using too much memory
 Mar 16, 2015
 =end
 File.open(ARGV[0]).each_line do |line| 
