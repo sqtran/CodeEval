@@ -1,0 +1,20 @@
+asterisk_domain@foo.*
+disposable.style.email.with+symbol@example.com
+b@d.net
+this\ still\"not\\allowed@example.com
+very.common@example.com
+bob123@alice123.com
+a.little.lengthy.but.fine@dept.example.com
+niceandsimple@example.com
+this is"not\allowed@example.com
+this is not true
+a"b(c)d,e:f;g<h>i[j\k]l@example.com
+A@b@c@example.com
+Abc.example.com
+b@domain.net
+disposable.style.email.with+156@example.com
+<invalid>@foo.com
+"very.unusual.@.unusual.com"@example.com
+hfij#kjdfvkl
+just"not"right@example.com
+1@d.net
