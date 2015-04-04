@@ -3,8 +3,10 @@ Steve Tran
 Game of Life in Ruby!
 Apr 4, 2015
 =end
-
+$stale = false
 def step
+  return unless !$stale
+
   a = Array.new ($grid.size) {Array.new}
   (0..$grid.size-1).each { |ro|
     (0..$grid.size-1).each { |co| 
@@ -19,6 +21,10 @@ def step
       end
     }
   }
+
+  if $grid == a
+    $stale = true
+  end
   $grid = a
 end
 
@@ -41,5 +47,6 @@ File.open(ARGV[0]).each_line do |line|
   $grid.push line.strip.split ""
 end
 
-$grid.cycle(10) { step }
+(1..10).each { step }
+
 $grid.each {|r| puts r.join "" }
