@@ -11,11 +11,11 @@ def step
     (0..$n).each { |co|
       n = neighbors(ro,co)
       if n < 2
-        $a[ro][co] = '.'
-      elsif n > 3 && $grid[ro][co] == '*'
-        $a[ro][co] = '.'
-      elsif n == 3 && $grid[ro][co] == '.'
-        $a[ro][co] = '*'
+        $a[ro][co] = false
+      elsif n > 3 && $grid[ro][co]
+        $a[ro][co] = false
+      elsif n == 3 && !$grid[ro][co]
+        $a[ro][co] = true
       end
     }
   }
@@ -35,20 +35,20 @@ end
 
 def neighbors(r, c)
   sum = 0
-  sum += 1 unless !(r-1 >= 0 && $grid[r-1][c] == '*')
-  sum += 1 unless !(c-1 >= 0 && $grid[r][c-1] == '*')
-  sum += 1 unless !(r+1 <= $n && $grid[r+1][c] == '*')
-  sum += 1 unless !(c+1 <= $n && $grid[r][c+1] == '*')
-  sum += 1 unless !(c-1 >= 0 && r-1 >= 0 && $grid[r-1][c-1] == '*')
-  sum += 1 unless !(c-1 >= 0 && r+1 <= $n && $grid[r+1][c-1] == '*')
-  sum += 1 unless !(c+1 <= $n && r+1 <= $n && $grid[r+1][c+1] == '*')
-  sum += 1 unless !(c+1 <= $n && r-1 >= 0 && $grid[r-1][c+1] == '*')
+  sum += 1 unless !(r-1 >= 0 && $grid[r-1][c])
+  sum += 1 unless !(c-1 >= 0 && $grid[r][c-1])
+  sum += 1 unless !(r+1 <= $n && $grid[r+1][c])
+  sum += 1 unless !(c+1 <= $n && $grid[r][c+1])
+  sum += 1 unless !(c-1 >= 0 && r-1 >= 0 && $grid[r-1][c-1])
+  sum += 1 unless !(c-1 >= 0 && r+1 <= $n && $grid[r+1][c-1])
+  sum += 1 unless !(c+1 <= $n && r+1 <= $n && $grid[r+1][c+1])
+  sum += 1 unless !(c+1 <= $n && r-1 >= 0 && $grid[r-1][c+1])
   sum
 end
 
 $grid = []
 File.open(ARGV[0]).each_line do |line|
-  $grid.push line.strip.split ""
+  $grid.push line.strip.split("").collect { |e| e == "*" }
 end
 
 $n = $grid.size-1
@@ -60,4 +60,10 @@ $a = Array.new ($grid.size) {Array.new}
 }
 
 (1..10).each { step }
-$grid.each {|r| puts r.join "" }
+$grid.each {|r| puts r.collect{|e| 
+  if e 
+    "*"
+  else
+    "."
+  end
+}.join "" }
