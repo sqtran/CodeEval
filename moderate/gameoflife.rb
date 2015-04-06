@@ -7,25 +7,30 @@ $stale = false
 def step
   return unless !$stale
 
-  a = Array.new ($grid.size) {Array.new}
   (0..$grid.size-1).each { |ro|
-    (0..$grid.size-1).each { |co| 
+    (0..$grid.size-1).each { |co|
       n = neighbors(ro,co)
-      a[ro][co] = $grid[ro][co]
       if n < 2
-        a[ro][co] = '.'
+        $a[ro][co] = '.'
       elsif n > 3 && $grid[ro][co] == '*'
-        a[ro][co] = '.'
+        $a[ro][co] = '.'
       elsif n == 3 && $grid[ro][co] == '.'
-        a[ro][co] = '*'           
+        $a[ro][co] = '*'
       end
     }
   }
-
-  if $grid == a
+  if $grid == $a
     $stale = true
+    return
   end
-  $grid = a
+
+  (0..$grid.size-1).each { |ro|
+    if $grid[ro] != $a[ro]
+      (0..$grid.size-1).each { |co|
+        $grid[ro][co] = $a[ro][co]
+      }
+    end
+  }
 end
 
 def neighbors(r, c)
@@ -47,6 +52,12 @@ File.open(ARGV[0]).each_line do |line|
   $grid.push line.strip.split ""
 end
 
-(1..10).each { step }
+$a = Array.new ($grid.size) {Array.new}
+(0..$grid.size-1).each { |ro|
+  (0..$grid.size-1).each { |co|
+    $a[ro][co] = $grid[ro][co]
+  }
+}
 
+(1..10).each { step }
 $grid.each {|r| puts r.join "" }
