@@ -11,7 +11,7 @@ File.open(ARGV[0]).each_line do |line|
 
   max = 0
   line.strip.split(";").each { |e|
-    val =  e[1..-2].split(",").map(&:to_i)
+    val =  e.strip[1..-2].split(",").map(&:to_i)
     max = val[2] unless val[2] < max
     input.push val
   }
