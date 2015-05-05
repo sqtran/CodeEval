@@ -9,12 +9,10 @@ require 'debugger'
 t1 = Time.now
 
 $maze = Array.new
-$visit = Array.new
 $current_steps = 0 
 
 File.open(ARGV[0]).each_line do |line| 
   $maze.push line.strip.split ""
-  $visit.push [false]*$maze[0].size
 end
 
 $start = $maze[0].find_index ' '
@@ -25,18 +23,16 @@ def showboard
 end
 
 def move?(row, col)
-  return row >= 0 && row < $maze.size && col < $maze[0].size && col >= 0 && $maze[row][col] == " " && $visit[row][col] == false
+  return row >= 0 && row < $maze.size && col < $maze[0].size && col >= 0 && $maze[row][col] == " "
 end
 
 def mark(row, col)
   $maze[row][col] = "+"
-  $visit[row][col] = true
   $current_steps += 1
 end
 
 def back(row, col)
   $maze[row][col] = " "
-  $visit[row][col] = false
   $current_steps -= 1
 end
 
