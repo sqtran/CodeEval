@@ -3,72 +3,81 @@ Steve Tran
 The Labyrinth Solution
 Apr 3, 2015
 =end
-require 'debugger'
 
 $maze = Array.new
-$visit = Array.new#($maze.size, Array.new($maze.size, 'F'))
+$visit = Array.new
 
 File.open(ARGV[0]).each_line do |line| 
   $maze.push line.strip.split ""
-  $visit.push ['F']*$maze[0].size
+  $visit.push [false]*$maze[0].size
 end
 
 $start = $maze[0].find_index ' '
 $finish = $maze.last.find_index ' '
-puts "start = [0][#{$start}], end = [#{$maze.size}][#{$finish}]"
 
-def print
+def showboard
   $maze.each { |e| puts e.join "" }
-  #$visit.each { |e| puts e.join "" }
 end
 
 def move?(row, col)
-  return row >= 0 && row < $maze.size-1 && col < $maze.size-1 && col >= 0 && $maze[row][col] == " " && $visit[row][col] != 'T'
+  return row >= 0 && row < $maze.size && col < $maze[0].size && col >= 0 && $maze[row][col] == " " && $visit[row][col] == false
 end
 
 def mark(row, col)
-#  puts "marking [#{row}][#{col}]"
   $maze[row][col] = "+"
-  $visit[row][col] = 'T'
+  $visit[row][col] = true
 end
 
 def back(row, col)
   $maze[row][col] = " "
-  $visit[row][col] = 'F'
+  $visit[row][col] = false
 end
 
+def countsteps
+  count = 0
+  $maze.each { |r| 
+    r.each {|c| 
+      count += 1 unless c != "+"
+    }  
+  }
+  return count
+end
+
+
+@shortest = nil
+@solution
+
 def recurse (row, col)
-  print
+
   mark(row, col)
-  if row == $maze.size && col == $finish
-    puts "done"
+  if row == $maze.size-1 && col == $finish
+    if !@shortest || countsteps < @shortest
+      @shortest = countsteps
+
+      @solution = Array.new
+      $maze.each {|e| @solution.push e.clone}
+    end
   else
-#    puts "time to start moving"
+
     if move?(row-1,col)
-#      puts "try up"
       recurse(row-1, col)
-      #back(row-1, col)
+      back(row-1, col)
     end
     if move?(row, col-1)
-#      puts "try left"
-      recurse(row, col+1)
-      #back(row, col+1)
+      recurse(row, col-1)
+      back(row, col-1)
     end 
     if move?(row+1, col)
-#      puts "try down"
       recurse(row+1, col)
-      #back(row+1, col)
+      back(row+1, col)
     end
     if move?(row, col+1)
-#      puts "try right"
       recurse(row, col+1)
-      #back(row, col+1)
+      back(row, col+1)
     end
 
   end
 end
 
-#debugger
 recurse(0,$start)
-print
-
+@solution.each { |e| puts e.join "" }
