@@ -13,7 +13,7 @@ File.open(ARGV[0]).each_line do |line|
   
   line.strip.split(" ").reverse.each { |e|
     if !is_num(e)
-      stack.push eval("#{stack.pop}#{e}#{stack.pop}")
+      stack.push stack.pop.send(e, stack.pop) 
     else
       stack.push e.to_f
     end
