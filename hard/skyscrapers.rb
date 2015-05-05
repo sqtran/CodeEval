@@ -3,14 +3,21 @@ Steve Tran
 Skyscrapers Solution
 May 4, 2015
 =end
+
+t1 = Time.now
+
 File.open(ARGV[0]).each_line do |line|
   input = []
+
+  max = 0
   line.strip.split(";").each { |e|
-    input.push e[1..-2].split(",").map(&:to_i)
+    val =  e[1..-2].split(",").map(&:to_i)
+    max = val[2] unless val[2] < max
+    input.push val
   }
   input.sort!
   city = Hash.new
-  (input.first[0]..input.last[2]).each { |i|
+  (input.first[0]..max).each { |i|
     city[[i..i+1]] = 0
   }
 
@@ -34,3 +41,5 @@ File.open(ARGV[0]).each_line do |line|
 
   puts v.join " "
 end
+
+puts Time.now - t1
