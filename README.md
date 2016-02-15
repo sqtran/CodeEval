@@ -3,7 +3,7 @@ Just some codeeval.com solutions I worked on
 
 Here is the scoring I found from googling.
 
-def get_submission_score(score, memory_taken, time_taken, category)
+def get_submission_score(score, memory_taken, time_taken, category) {
 
     #@param score: the score which is received by test-cases
     #@param memory_taken: memory taken by submission
@@ -32,3 +32,4 @@ def get_submission_score(score, memory_taken, time_taken, category)
     factor = (memory_factor + time_factor)/2
 
     return score * max_total_score * factor / 100.
+}
